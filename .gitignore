@@ -1,5 +1,6 @@
 # Environment
 venv/
-
+__pycache__/
 # Extra
 stanford/
+videos/
