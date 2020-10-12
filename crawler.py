@@ -23,7 +23,7 @@ class Spider(scrapy.Spider):
                         if link:
                             url = link
                             yield scrapy.Request(url, self.get_ytlink)
-                        if cnt > 10:
+                        if cnt > 1:
                             break
                 except Exception as e:
                     continue
