@@ -4,3 +4,5 @@ __pycache__/
 # Extra
 stanford/
 videos/
+crawler1.py
+temp.py
