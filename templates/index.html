@@ -22,7 +22,9 @@
             <div class="col-lg-12">
                 <header class="text-center tm-site-header">
                     <!-- <div class="tm-site-logo"></div> -->
-                    <h1 class="pl-4 tm-site-title"><img style="width: 80px;" src={{ url_for('static', filename="img/ISL.gif")}}> ISL Convert</h1>
+                    <a href="http://127.0.0.1:5000/" style="text-decoration: none;">
+                        <b><h1 class="pl-4 tm-site-title"><img style="width: 80px;" src={{ url_for('static', filename="img/ISL.gif")}}> ISL Convert</h1></b>
+                    </a>
                 </header>
             </div>
         </div>
@@ -31,9 +33,10 @@
             <div class="row">
                 <div class="col-lg-12">
                     <h2 class="tm-welcome-text">Welcome to ISL - Convert</h2>
+                    <h3>Please provide an input</h3>
                 </div>
             </div>
-  
+
         <!-- <input name="inpbox" class="form-control" [value]='inpValue'/> <br/>    -->
         <!-- <p> {{inpValue}} </p>  -->
     
@@ -54,7 +57,7 @@
         <div class="row">
             <div class="col-lg-12">
                 <div class="tm-video-container">
-                    <video src={{path}} id="tm-welcome-video" class="tm-welcome-video" autoplay loop muted="">
+                    <video src={{path}} id="tm-welcome-video" class="tm-welcome-video" autoplay loop muted="" controls style="height: 400px; width: 400px;">
                         <!-- <source [(ngModel)]="path" src="{{path}}" type="video/mp4">  -->
                             <!-- <source src="/videos/output-sentence/test.mp4" type="video/mp4">  -->
                             Your browser does not support the video tag.
@@ -62,9 +65,16 @@
                 </div>
             </div>
         </div>
+        <br><br>
     
-    
-
+        <div class="row">
+            <div class="col-lg-12">
+                <img src={{ url_for('static', filename='img/isl.jpg') }} alt="">
+                <h3>
+                    <b>ISL Alpbhabets</b>
+                </h3>
+            </div>
+        </div>
         
         <footer class="row mt-5 mb-5">
             <div class="col-lg-12">
@@ -81,6 +91,7 @@
     <!-- <script src="js/jquery-3.2.1.slim.min.js"></script> -->
     <script src={{ url_for('static', filename="js/templatemo-script.js") }}></script>
     <!-- <script src="../assets/js/templatemo-script.js"></script> -->
+
 
 </body>
 </html>

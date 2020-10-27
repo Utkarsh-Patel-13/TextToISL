@@ -5,7 +5,7 @@ import argparse
 from nltk.parse.corenlp import CoreNLPParser
 from nltk.tag.stanford import StanfordPOSTagger, StanfordNERTagger
 from nltk.tokenize.stanford import StanfordTokenizer
-from nltk.tree import *
+from nltk.tree import Tree, ParentedTree
 from nltk import word_tokenize
 from nltk.corpus import stopwords
 from nltk.stem import WordNetLemmatizer, PorterStemmer
@@ -73,7 +73,8 @@ def convert_sentence(input_string: str):
 
     parsed_sent = islTree.leaves()
 
-    words = parsed_sent
+    # words = parsed_sent
+
     # print("ISL Tree\n")
     # print(islTree)
     # print("\n\n")
@@ -81,10 +82,11 @@ def convert_sentence(input_string: str):
     # nltk.download('stopwords')
     # nltk.download('wordnet')
     # print()
+
     stop_words = set(stopwords.words("english"))
 
     lemmantizer = WordNetLemmatizer()
-    ps = PorterStemmer()
+    # ps = PorterStemmer()
     lemmantized_words = []
 
 

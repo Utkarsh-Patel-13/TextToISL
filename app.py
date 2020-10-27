@@ -10,8 +10,8 @@ cors = CORS(app=app)
 
 @app.route('/', methods=['GET'])
 @app.route('/<f_name>/', methods=['GET'])
-def hello(f_name: str = None):
-    path = "../static/videos/video.mp4"
+def index(f_name: str = None):
+    path = "../static/videos/alphabets.mp4"
     if f_name is not None:
         path = "../static/videos/" + f_name
     return render_template('index.html', path=path)
@@ -38,7 +38,7 @@ def convert():
         path = convert_sentence(t.text)
 
         if path is None:
-            path = 'video.mp4'
+            path = 'alphabets.mp4'
 
         return redirect('/' + path, )
 
