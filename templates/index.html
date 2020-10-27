@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>ISL Convert</title>
+    <!-- <base href="/"> -->
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400">
+    <!-- <link type="text/css" rel="stylesheet" href="/css/bootstrap.min.css">
+    <link type="text/css" rel="stylesheet" href="/css/templatemo-style.css"> -->
+    <link type="text/css" rel="stylesheet" href={{ url_for('static', filename="css/bootstrap.min.css")}}>
+    <link type="text/css" rel="stylesheet" href={{ url_for('static', filename="css/templatemo-style.css")}}>
+
+</head>
+
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <header class="text-center tm-site-header">
+                    <!-- <div class="tm-site-logo"></div> -->
+                    <h1 class="pl-4 tm-site-title"><img style="width: 80px;" src={{ url_for('static', filename="img/ISL.gif")}}> ISL Convert</h1>
+                </header>
+            </div>
+        </div>
+
+        <div class="container tm-container-2">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h2 class="tm-welcome-text">Welcome to ISL - Convert</h2>
+                </div>
+            </div>
+  
+        <!-- <input name="inpbox" class="form-control" [value]='inpValue'/> <br/>    -->
+        <!-- <p> {{inpValue}} </p>  -->
+    
+        <form action="http://127.0.0.1:5000/api/convert" method="POST">
+
+            <input class="form-control" name="inputBox"/> <br/> 
+
+            <input type="submit" class="btn btn-primary col-lg-3" value="Submit">
+    
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+            <input type="reset" class="btn btn-primary col-lg-3" value="Reset">
+    
+        </form>    
+        <div id="google_translate_element"></div>
+        <!-- </form> -->
+        <br><br>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="tm-video-container">
+                    <video src={{path}} id="tm-welcome-video" class="tm-welcome-video" autoplay loop muted="">
+                        <!-- <source [(ngModel)]="path" src="{{path}}" type="video/mp4">  -->
+                            <!-- <source src="/videos/output-sentence/test.mp4" type="video/mp4">  -->
+                            Your browser does not support the video tag.
+                    </video>
+                </div>
+            </div>
+        </div>
+    
+    
+
+        
+        <footer class="row mt-5 mb-5">
+            <div class="col-lg-12">
+                <p class="text-center tm-text-gray tm-copyright-text mb-0">
+                    Utkarsh Patel <br/>
+                    Namra Solanki <br/>
+                </p>
+            </div>
+        </footer>
+    </div>
+    <!-- .container -->
+
+    <script src={{ url_for('static', filename="js/jquery.min.js") }}></script>
+    <!-- <script src="js/jquery-3.2.1.slim.min.js"></script> -->
+    <script src={{ url_for('static', filename="js/templatemo-script.js") }}></script>
+    <!-- <script src="../assets/js/templatemo-script.js"></script> -->
+
+</body>
+</html>

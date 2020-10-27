@@ -11,84 +11,100 @@ from nltk.corpus import stopwords
 from nltk.stem import WordNetLemmatizer, PorterStemmer
 import nltk
 
+from createclip import create_video
 #----------------------------#
+def convert_sentence(input_string: str):
+    java_path = '/usr/bin/java'
+    os.environ['CLASSPATH'] = java_path
 
-java_path = '/usr/bin/java'
-os.environ['CLASSPATH'] = java_path
 
-#----------------------------#
+    if input_string.split() == 1:
+        return None
+    
 
-input_string = input("Input a string: ")
+    if len(input_string.split()) == 1:
+        path = create_video(input_string)
+        return path
+    
+    parser = CoreNLPParser(url='http://localhost:9000')
 
-#----------------------------#
+    englishtree = [tree for tree in parser.parse(input_string.split())]
+    parsetree = englishtree[0]
 
-parser = CoreNLPParser(url='http://localhost:9000')
 
-englishtree = [tree for tree in parser.parse(input_string.split())]
-parsetree = englishtree[0]
+    dict = {}
 
-#----------------------------#
+    # parenttree = ParentedTree(node=parsetree, children=[])
+    parenttree = ParentedTree.fromstring(str(parsetree))
 
-dict = {}
+    # print("Input Sentence: ", input_string)
+    # print("Input Sentence Tree\n")
+    # print(parenttree)
+    print("\n\n")
 
-# parenttree = ParentedTree(node=parsetree, children=[])
-parenttree = ParentedTree.fromstring(str(parsetree))
+    for sub in parenttree.subtrees():
+        dict[sub.treeposition()] = 0
 
-for sub in parenttree.subtrees():
-    dict[sub.treeposition()] = 0
+    #----------------------------#
 
-#----------------------------#
+    islTree = Tree('ROOT', [])
+    i = 0
 
-islTree = Tree('ROOT', [])
-i = 0
+    for sub in parenttree.subtrees():
+        if (sub.label() =="NP" and dict[sub.treeposition()] == 0 and dict[sub.parent().treeposition()] == 0):
+            dict[sub.treeposition()] = 1
+            islTree.insert(i, sub)
+            i = i + 1
 
-for sub in parenttree.subtrees():
-    if (sub.label() =="NP" and dict[sub.treeposition()] == 0 and dict[sub.parent().treeposition()] == 0):
-        dict[sub.treeposition()] = 1
-        islTree.insert(i, sub)
-        i = i + 1
+        if(sub.label()=="VP" or sub.label()=="PRP"):
+            for sub2 in sub.subtrees():
+                if((sub2.label()=="NP" or sub2.label()=='PRP') and dict[sub2.treeposition()]==0 and dict[sub2.parent().treeposition()]==0):
+                    dict[sub2.treeposition()] = 1
+                    islTree.insert(i,sub2)
+                    i=i+1
 
-    if(sub.label()=="VP" or sub.label()=="PRP"):
+
+    for sub in parenttree.subtrees():
         for sub2 in sub.subtrees():
-            if((sub2.label()=="NP" or sub2.label()=='PRP') and dict[sub2.treeposition()]==0 and dict[sub2.parent().treeposition()]==0):
-                dict[sub2.treeposition()] = 1
+            if(len(sub2.leaves())==1 and dict[sub2.treeposition()]==0 and dict[sub2.parent().treeposition()]==0):
+                dict[sub2.treeposition()]=1
                 islTree.insert(i,sub2)
                 i=i+1
 
+    parsed_sent = islTree.leaves()
 
-for sub in parenttree.subtrees():
-    for sub2 in sub.subtrees():
-        if(len(sub2.leaves())==1 and dict[sub2.treeposition()]==0 and dict[sub2.parent().treeposition()]==0):
-            dict[sub2.treeposition()]=1
-            islTree.insert(i,sub2)
-            i=i+1
+    words = parsed_sent
+    # print("ISL Tree\n")
+    # print(islTree)
+    # print("\n\n")
 
-parsed_sent = islTree.leaves()
+    # nltk.download('stopwords')
+    # nltk.download('wordnet')
+    # print()
+    stop_words = set(stopwords.words("english"))
 
-words = parsed_sent
+    lemmantizer = WordNetLemmatizer()
+    ps = PorterStemmer()
+    lemmantized_words = []
 
-# nltk.download('stopwords')
-# nltk.download('wordnet')
-# print()
-stop_words = set(stopwords.words("english"))
 
-lemmantizer = WordNetLemmatizer()
-ps = PorterStemmer()
-lemmantized_words = []
+    for w in parsed_sent:
+        # w = ps.stem(w)
+        lemmantized_words.append(lemmantizer.lemmatize(w))
 
-for w in parsed_sent:
-    lemmantized_words.append(lemmantizer.lemmatize(w))
+    islSentence = ""
 
-islSentence = ""
+    for w in lemmantized_words:
+        if w not in stop_words:
+            islSentence += w
+            islSentence += " "
 
-for w in lemmantized_words:
-    if w not in stop_words:
-        islSentence += w
-        islSentence += " "
+        # islSentence += w
+        # islSentence += " "
 
-    # islSentence += w
-    # islSentence += " "
+    # print("ISL Sentence\n")
+    # print(islSentence)
+    # print("\n\n")
+    path = create_video(islSentence)
 
-print()
-print("Input sentence: ", input_string)
-print("ISL Sentence: ", islSentence)
+    return path
